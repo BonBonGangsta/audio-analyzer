@@ -27,6 +27,65 @@ TRACK_TYPE_MAP = {
 def mono_to_stereo(audio):
   return np.column_stack((audio, audio))
 
+def band_energy_ratio_avg(audio, low_freq, high_freq, sample_rate=44100, frame_size=1024, hop_size=512):
+    """
+    Calculate the average band energy ratio over all frames in the audio.
+
+    Args:
+        audio (numpy.ndarray): The input mono audio signal.
+        low_freq (float): Lower bound of the frequency band.
+        high_freq (float): Upper bound of the frequency band.
+        sample_rate (int): Sample rate of the audio.
+        frame_size (int): Frame size for windowing and FFT.
+        hop_size (int): Hop size between frames.
+
+    Returns:
+        float: Average band energy ratio for the specified frequency range.
+    """
+
+    # Essentia algorithms
+    window_algo = es.Windowing(type='hann')
+    spectrum_algo = es.Spectrum(size=frame_size)
+
+    # Frequency resolution (bin width)
+    freq_resolution = sample_rate / frame_size
+
+    # Get bin indices for the frequency band
+    low_bin = int(low_freq / freq_resolution)
+    high_bin = int(high_freq / freq_resolution)
+
+    # Accumulators
+    ratios = []
+
+    # Process frames
+    for start in range(0, len(audio) - frame_size, hop_size):
+        frame = audio[start:start + frame_size]
+
+        # Apply window and get the spectrum
+        windowed_frame = window_algo(frame)
+        spectrum = spectrum_algo(windowed_frame)
+
+        # Energy in the target band
+        band_energy = np.sum(spectrum[low_bin:high_bin] ** 2)
+
+        # Total energy in the full spectrum
+        total_energy = np.sum(spectrum ** 2)
+
+        if total_energy == 0:
+            ratio = 0.0
+        else:
+            ratio = band_energy / total_energy
+
+        ratios.append(ratio)
+
+    # Average ratio over all frames
+    if len(ratios) == 0:
+        return 0.0
+
+    avg_ratio = np.mean(ratios)
+
+    return avg_ratio
+
 def generate_recommendations(audio, rms, centroid, ber_low, ber_mid, ber_high, track_type):
   """Generate EQ and compression suggestions based on analysis and track type."""
   eq_suggestions = []
@@ -148,9 +207,9 @@ def analyze_track(file_path, output_dir, track_type):
   rms = es.RMS()(audio)
 
   # Band energy ratios (low, mid, high)
-  ber_low = es.BandEnergyRatio(inputSize=1024)(audio, 20, 250)
-  ber_mid = es.BandEnergyRatio(inputSize=1024)(audio, 250, 4000)
-  ber_high = es.BandEnergyRatio(inputSize=1024)(audio, 4000, 20000)
+  ber_low = band_energy_ratio_avg(audio, low_freq=20, high_freq=250, sample_rate=44100)
+  ber_mid = band_energy_ratio_avg(audio, low_freq=250, high_freq=4000, sample_rate=44100)
+  ber_high = band_energy_ratio_avg(audio, low_freq=4000, high_freq=20000, sample_rate=44100)
 
   # Spectral features
   spectrum = es.Spectrum()(audio)
