@@ -21,7 +21,7 @@ def analyze_track(file_path, output_dir):
     spectrum = es.Spectrum()(audio)
     centroid = es.Centroid()(spectrum)
     complexity = es.SpectralComplexity()(spectrum)
-    instrument = es.InstrumentRecognition()(audio)
+    # instrument = es.InstrumentRecognition()(audio) Turns out it's not useful for isolated tracks
 
     base_name = os.path.splitext(os.path.basename(file_path))[0]
     waveform_plot = os.path.join(output_dir, f"{base_name}_waveform.png")
@@ -43,7 +43,6 @@ def analyze_track(file_path, output_dir):
 
     report = {
         "file": file_path,
-        "instrument": instrument,
         "rms": rms,
         "loudness": loudness,
         "spectral_centroid": centroid,
