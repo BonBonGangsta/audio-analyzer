@@ -21,7 +21,8 @@ TRACK_TYPE_MAP = {
   "Wendy.wav": "contra_alto",
   "Mile.wav": "contra_alto",
   "Anita.wav": "contra_alto",
-  "Accordion.wav": "accordion"
+  "Accordion.wav": "accordion",
+  "Piano.wav": "piano"
 }
 
 def mono_to_stereo(audio):
@@ -175,6 +176,17 @@ def generate_recommendations(audio, rms, centroid, ber_low, ber_mid, ber_high, t
           eq_suggestions.append("Reduce 5kHz - 8kHz to tame harshness or brittleness.")
       elif ber_high < 0.3:
           eq_suggestions.append("Boost 5kHz - 8kHz to add air and brightness.")
+  elif track_type == 'piano':
+      if ber_low < 0.3:
+          eq_suggestions.append("Boost 50Hz - 100Hz for low-end fullness.")
+      if ber_mid > 0.5:
+          eq_suggestions.append("Cut 200Hz - 400Hz to reduce muddiness or boxiness.")
+      if ber_mid < 0.4:
+          eq_suggestions.append("Boost 2kHz - 5kHz for attack and clarity.")
+      if ber_high < 0.3:
+          eq_suggestions.append("Boost 8kHz - 12kHz for air and brightness.")
+      if ber_high > 0.6:
+          eq_suggestions.append("Cut above 10kHz to reduce harshness or brittleness.")
 
   # Compression logic (basic crest factor)
   crest_factor = np.max(np.abs(audio)) / rms
