@@ -5,10 +5,16 @@ from visualize import plot_waveform
 DATA_DIR = "/app/data"
 OUTPUT_DIR = "/app/output"
 
+def mono_to_stereo(audio):
+  return np.column_stack((audio, audio))
+
 def analyze_track(file_path, output_dir):
     audio = es.MonoLoader(filename=file_path)()
 
-    loudness = es.LoudnessEBUR128()(audio)
+    # convert mono to stereo for laudnessEBUR128
+    stereo_audio = mono_to_stereo(audio)
+
+    loudness = es.LoudnessEBUR128()(stereo_audio)
     rms = es.RMS()(audio)
     centroid = es.Centroid()(es.Spectrum()(audio))
     complexity = es.SpectralComplexity()(es.Spectrum()(audio))
