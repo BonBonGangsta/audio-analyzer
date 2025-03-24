@@ -1,5 +1,6 @@
 import os
 import essentia.standard as es
+import numpy as np
 from visualize import plot_waveform
 
 DATA_DIR = "/app/data"
