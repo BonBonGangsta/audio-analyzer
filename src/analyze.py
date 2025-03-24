@@ -17,8 +17,10 @@ def analyze_track(file_path, output_dir):
 
     loudness = es.LoudnessEBUR128()(stereo_audio)
     rms = es.RMS()(audio)
-    centroid = es.Centroid()(es.Spectrum()(audio))
-    complexity = es.SpectralComplexity()(es.Spectrum()(audio))
+
+    spectrum = es.Spectrum()(audio)
+    centroid = es.Centroid()(spectrum)
+    complexity = es.SpectralComplexity()(spectrum)
     instrument = es.InstrumentRecognition()(audio)
 
     base_name = os.path.splitext(os.path.basename(file_path))[0]
@@ -57,7 +59,7 @@ def analyze_track(file_path, output_dir):
 
 def main():
     os.makedirs(OUTPUT_DIR, exist_ok=True)
-    files = [f for f in os.listdir(DATA_DIR) if f.endswith('.wav')]
+    files = [f for f in os.listdir(DATA_DIR) if f.lower().endswith('.wav')]
 
     if not files:
         print("⚠️ No WAV files found in /data")
