@@ -65,6 +65,58 @@ def generate_recommendations(audio, rms, centroid, ber_low, ber_mid, ber_high, t
       if ber_mid > 0.5:
           eq_suggestions.append("Cut 300Hz muddiness.")
 
+  elif track_type == 'tom':
+    if ber_low < 0.4:
+      eq_suggestions.append("Boost 80Hz - 100Hz for body and punch.")
+    if ber_mid > 0.5:
+      eq_suggestions.append("Cut 250Hz - 400Hz to reduce boxiness.")
+    if ber_high < 0.3:
+      eq_suggestions.append("Boost 5kHz - 7kHz for attack and clarity.")
+
+  elif track_type == 'hihat':
+    if ber_low > 0.2:
+        eq_suggestions.append("Cut 200Hz - 400Hz to reduce bleed from other drums.")
+    if ber_high < 0.5:
+        eq_suggestions.append("Boost 8kHz - 12kHz for shimmer and brightness.")
+    if ber_high > 0.7:
+        eq_suggestions.append("Consider taming harshness above 12kHz.")
+
+  elif track_type == 'tenor':
+      if ber_low < 0.3:
+          eq_suggestions.append("Boost 150Hz - 250Hz for warmth and fullness.")
+      if ber_mid < 0.4:
+          eq_suggestions.append("Boost 2kHz - 5kHz for vocal presence and clarity.")
+      if ber_high > 0.5:
+          eq_suggestions.append("Apply de-esser or reduce 5kHz - 8kHz to tame sibilance.")
+
+  elif track_type == 'contra_alto':
+      if ber_low < 0.4:
+          eq_suggestions.append("Boost 130Hz - 200Hz to add body and warmth.")
+      if ber_mid < 0.4:
+          eq_suggestions.append("Boost 1kHz - 3kHz for clarity and presence.")
+      if ber_high > 0.6:
+          eq_suggestions.append("Reduce 5kHz - 7kHz to control harshness.")
+
+  elif track_type == 'alto':
+      if ber_low < 0.3:
+          eq_suggestions.append("Boost 150Hz - 250Hz for warmth and body.")
+      if ber_mid < 0.4:
+          eq_suggestions.append("Boost 2kHz - 4kHz for articulation and clarity.")
+      if ber_high > 0.5:
+          eq_suggestions.append("Reduce 5kHz - 8kHz or apply de-esser for sibilance control.")
+
+  elif track_type == 'accordion':
+      if ber_low < 0.4:
+          eq_suggestions.append("Boost 100Hz - 250Hz for warmth and bass body.")
+      if ber_mid > 0.5:
+          eq_suggestions.append("Cut 300Hz - 500Hz to reduce boxiness and muddiness.")
+      if ber_mid < 0.3:
+          eq_suggestions.append("Boost 1kHz - 4kHz for clarity and presence.")
+      if ber_high > 0.6:
+          eq_suggestions.append("Reduce 5kHz - 8kHz to tame harshness or brittleness.")
+      elif ber_high < 0.3:
+          eq_suggestions.append("Boost 5kHz - 8kHz to add air and brightness.")
+
   # Compression logic (basic crest factor)
   crest_factor = np.max(np.abs(audio)) / rms
   if crest_factor > 6:
