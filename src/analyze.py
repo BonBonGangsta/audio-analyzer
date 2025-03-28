@@ -229,6 +229,10 @@ def analyze_track(file_path, output_dir, track_type):
   ber_mid = band_energy_ratio_avg(audio, low_freq=250, high_freq=4000, sample_rate=44100)
   ber_high = band_energy_ratio_avg(audio, low_freq=4000, high_freq=20000, sample_rate=44100)
 
+  # Ensure even-length input for FFT
+  if len(audio) % 2 != 0:
+      audio = audio[:-1]  # Trim last sample
+
   # Spectral features
   spectrum = es.Spectrum()(audio)
   centroid = es.Centroid()(spectrum)
