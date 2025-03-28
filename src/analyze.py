@@ -229,12 +229,18 @@ def analyze_track(file_path, output_dir, track_type):
   ber_mid = band_energy_ratio_avg(audio, low_freq=250, high_freq=4000, sample_rate=44100)
   ber_high = band_energy_ratio_avg(audio, low_freq=4000, high_freq=20000, sample_rate=44100)
 
-  # Ensure even-length input for FFT
-  if len(audio) % 2 != 0:
-      audio = audio[:-1]  # Trim last sample
+  # Only use a frame, not full audio, and ensure it's even-sized
+  frame_size = 1024
+  frame = audio[:frame_size]
 
-  # Spectral features
-  spectrum = es.Spectrum()(audio)
+  if len(frame) % 2 != 0:
+      frame = frame[:-1]
+
+  window = es.Windowing(type='hann')
+  spectrum_algo = es.Spectrum()
+
+  windowed = window(frame)
+  spectrum = spectrum_algo(windowed)
   centroid = es.Centroid()(spectrum)
 
   # Plot waveform
