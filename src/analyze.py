@@ -10,7 +10,7 @@ TRACK_TYPE_MAP = {
   "Bonbo.wav": "kick",
   "Reo.wav": "snare",
   "OverMic.wav": "overhead",
-  "Bajo.wav": "bass",
+  "Bass.wav": "bass",
   "Guitar.wav": "guitar",
   "Ton de Piso.wav": "tom",
   "Ton.wav": "tom",
@@ -19,7 +19,7 @@ TRACK_TYPE_MAP = {
   "Pastor.wav": "tenor",
   "Director.wav": "tenor",
   "Wendy.wav": "contra_alto",
-  "Mile.wav": "contra_alto",
+  "Milena.wav": "contra_alto",
   "Anita.wav": "contra_alto",
   "Accordion.wav": "accordion",
   "Piano.wav": "piano"
@@ -64,6 +64,12 @@ def band_energy_ratio_avg(audio, low_freq, high_freq, sample_rate=44100, frame_s
 
         # Apply window and get the spectrum
         windowed_frame = window_algo(frame)
+
+        frame = audio[start:start + frame_size]
+
+        # Ensure even length
+        if len(frame) % 2 != 0:
+            frame = frame[:-1]
         spectrum = spectrum_algo(windowed_frame)
 
         # Energy in the target band
