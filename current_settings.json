@@ -1,0 +1,186 @@
+{
+	"Anita.wav": {
+		"eq": {
+			"low": 0,
+			"mid": 0,
+			"high": 0
+		},
+		"compression": {
+			"threshold": -6,
+			"ratio": "3:1",
+			"attack": 10,
+			"release": 80
+		},
+		"gain": 0
+	},
+	"Guitar.wav": {
+		"eq": {
+			"low": 0,
+			"mid": 0,
+			"high": 0
+		},
+		"compression": {
+			"threshold": -6,
+			"ratio": "3:1",
+			"attack": 10,
+			"release": 80
+		},
+		"gain": 0
+	},
+	
+	"Bass.wav": {
+		"eq": {
+			"low": 0,
+			"mid": 0,
+			"high": 0
+		},
+		"compression": {
+			"threshold": -6,
+			"ratio": "3:1",
+			"attack": 10,
+			"release": 80
+		},
+		"gain": 0
+	},
+	"Bombo.wav": {
+		"eq": {
+			"low": 0,
+			"mid": 0,
+			"high": 0
+		},
+		"compression": {
+			"threshold": -6,
+			"ratio": "3:1",
+			"attack": 10,
+			"release": 80
+		},
+		"gain": 0
+	},
+	"Carlos.wav": {
+		"eq": {
+			"low": 0,
+			"mid": 0,
+			"high": 0
+		},
+		"compression": {
+			"threshold": -6,
+			"ratio": "3:1",
+			"attack": 10,
+			"release": 80
+		},
+		"gain": 0
+	},
+	"HiHat.wav": {
+		"eq": {
+			"low": 0,
+			"mid": 0,
+			"high": 0
+		},
+		"compression": {
+			"threshold": -6,
+			"ratio": "3:1",
+			"attack": 10,
+			"release": 80
+		},
+		"gain": 0
+	},
+	"Milena.wav": {
+		"eq": {
+			"low": 0,
+			"mid": 0,
+			"high": 0
+		},
+		"compression": {
+			"threshold": -6,
+			"ratio": "3:1",
+			"attack": 10,
+			"release": 80
+		},
+		"gain": 0
+	},
+	"OverMic.wav": {
+		"eq": {
+			"low": 0,
+			"mid": 0,
+			"high": 0
+		},
+		"compression": {
+			"threshold": -6,
+			"ratio": "3:1",
+			"attack": 10,
+			"release": 80
+		},
+		"gain": 0
+	},
+	"Piano.wav": {
+		"eq": {
+			"low": 0,
+			"mid": 0,
+			"high": 0
+		},
+		"compression": {
+			"threshold": -6,
+			"ratio": "3:1",
+			"attack": 10,
+			"release": 80
+		},
+		"gain": 0
+	},
+	"Redo.wav": {
+		"eq": {
+			"low": 0,
+			"mid": 0,
+			"high": 0
+		},
+		"compression": {
+			"threshold": -6,
+			"ratio": "3:1",
+			"attack": 10,
+			"release": 80
+		},
+		"gain": 0
+	},
+	"Tom.wav": {
+		"eq": {
+			"low": 0,
+			"mid": 0,
+			"high": 0
+		},
+		"compression": {
+			"threshold": -6,
+			"ratio": "3:1",
+			"attack": 10,
+			"release": 80
+		},
+		"gain": 0
+	},
+	"TomPiso.wav": {
+		"eq": {
+			"low": 0,
+			"mid": 0,
+			"high": 0
+		},
+		"compression": {
+			"threshold": -6,
+			"ratio": "3:1",
+			"attack": 10,
+			"release": 80
+		},
+		"gain": 0
+	},
+	"Wendy.wav": {
+		"eq": {
+			"low": 0,
+			"mid": 0,
+			"high": 0
+		},
+		"compression": {
+			"threshold": -6,
+			"ratio": "3:1",
+			"attack": 10,
+			"release": 80
+		},
+		"gain": 0
+	},
+
+}
