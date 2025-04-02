@@ -7,12 +7,12 @@ DATA_DIR = "/app/data"
 OUTPUT_DIR = "/app/output"
 
 TRACK_TYPE_MAP = {
-  "Bonbo.wav": "kick",
-  "Reo.wav": "snare",
+  "Bombo.wav": "kick",
+  "Redo.wav": "snare",
   "OverMic.wav": "overhead",
   "Bass.wav": "bass",
   "Guitar.wav": "guitar",
-  "Ton de Piso.wav": "tom",
+  "TonPiso.wav": "tom",
   "Ton.wav": "tom",
   "HiHat.wav": "hihat",
   "Carlos.wav": "tenor",
