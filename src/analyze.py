@@ -15,22 +15,22 @@ DATA_DIR = "/app/data"
 OUTPUT_DIR = "/app/output"
 
 TRACK_TYPE_MAP = {
-    "Bombo.wav": "kick",
-    "Redo.wav": "snare",
-    "OverMic.wav": "overhead",
-    "Bass.wav": "bass",
-    "Guitar.wav": "guitar",
-    "TonPiso.wav": "tom",
-    "Ton.wav": "tom",
-    "HiHat.wav": "hihat",
-    "Carlos.wav": "tenor",
-    "Pastor.wav": "tenor",
-    "Director.wav": "tenor",
-    "Wendy.wav": "contra_alto",
-    "Milena.wav": "contra_alto",
-    "Anita.wav": "contra_alto",
-    "Accordion.wav": "accordion",
-    "Piano.wav": "piano",
+    "bombo": "kick",
+    "redo": "snare",
+    "overmic": "overhead",
+    "bass": "bass",
+    "guitar": "guitar",
+    "tonpiso": "tom",
+    "ton": "tom",
+    "hihat": "hihat",
+    "carlos": "tenor",
+    "pastor": "tenor",
+    "director": "tenor",
+    "wendy": "contra_alto",
+    "milena": "contra_alto",
+    "anita": "contra_alto",
+    "accordion": "accordion",
+    "piano": "piano",
 }
 
 TARGET_LUFS_BY_TYPE = {
