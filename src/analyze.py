@@ -375,13 +375,13 @@ def analyze_track(file_path, output_dir, track_type):
     noise_issues = detect_noise_floor(audio)
 
     # Extract features
-    loudness = es.LoudnessEBUR128()(stereo_audio)
+    integrated_lufs, momentary_lufs = es.LoudnessEBUR128()(stereo_audio)
     rms = es.RMS()(audio)
 
     target_lufs = TARGET_LUFS_BY_TYPE.get(
         track_type.lower(), TARGET_LUFS_BY_TYPE["default"]
     )
-    gain_suggestions = suggest_gain_adjustment(loudness, target_lufs)
+    gain_suggestions = suggest_gain_adjustment(integrated_lufs, target_lufs)
 
     # Band energy ratios (low, mid, high)
     ber_low = band_energy_ratio_avg(
