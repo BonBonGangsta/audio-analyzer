@@ -375,7 +375,12 @@ def analyze_track(file_path, output_dir, track_type):
     noise_issues = detect_noise_floor(audio)
 
     # Extract features
-    integrated_lufs, momentary_lufs = es.LoudnessEBUR128()(stereo_audio)
+    loudness_algo = es.LoudnessEBUR128()
+    loudness_algo.reset()
+    loudness_algo(stereo_audio)
+
+    integrated_lufs = loudness_algo.getIntegratedLoudness()
+    momentary_lufs = loudness_algo.getMomentaryLoudness()
     rms = es.RMS()(audio)
 
     target_lufs = TARGET_LUFS_BY_TYPE.get(
