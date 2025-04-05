@@ -15,22 +15,22 @@ DATA_DIR = "/app/data"
 OUTPUT_DIR = "/app/output"
 
 TRACK_TYPE_MAP = {
-    "bombo": "kick",
-    "redo": "snare",
-    "overmic": "overhead",
-    "bass": "bass",
-    "guitar": "guitar",
-    "tonpiso": "tom",
-    "ton": "tom",
-    "hihat": "hihat",
-    "carlos": "tenor",
-    "pastor": "tenor",
-    "director": "tenor",
-    "wendy": "contra_alto",
-    "milena": "contra_alto",
-    "anita": "contra_alto",
-    "accordion": "accordion",
-    "piano": "piano",
+    "bombo.wav": "kick",
+    "redo.wav": "snare",
+    "overmic.wav": "overhead",
+    "bass.wav": "bass",
+    "guitar.wav": "guitar",
+    "tonpiso.wav": "tom",
+    "ton.wav": "tom",
+    "hihat.wav": "hihat",
+    "carlos.wav": "tenor",
+    "pastor.wav": "tenor",
+    "director.wav": "tenor",
+    "wendy.wav": "contra_alto",
+    "milena.wav": "contra_alto",
+    "anita.wav": "contra_alto",
+    "accordion.wav": "accordion",
+    "piano.wav": "piano",
 }
 
 TARGET_LUFS_BY_TYPE = {
@@ -432,7 +432,7 @@ def analyze_track(file_path, output_dir, track_type):
         "high": high_ratio / total,
     }
 
-    track_name = os.path.splitext(os.path.basename(file_path))[0].lower()
+    track_name = os.path.basename(file_path)
     current = CURRENT_SETTINGS.get(track_name, {})
 
     # Handle the EQ adjustments based on what is given in the json
@@ -489,7 +489,9 @@ def main():
         file_path = os.path.join(DATA_DIR, file_name)
 
         # Determine track type
-        track_type = TRACK_TYPE_MAP.get(file_name, "unknown")
+        track_name = os.path.splitext(file_name)[0].lower()
+        print(f"🔍 Looking up track type for: {track_name}")
+        track_type = TRACK_TYPE_MAP.get(track_name, "unknown")
 
         if track_type == "unknown":
             print(
