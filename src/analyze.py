@@ -7,8 +7,8 @@ import json
 
 
 try:
-    with open("/app/current_settings.json", "r") as f:
-        CURRENT_SETTINGS = json.load(f)
+  with open("/app/current_settings.json", "r") as f:
+    CURRENT_SETTINGS = json.load(f)
 except FileNotFoundError:
     CURRENT_SETTINGS = {}
     print("⚠️ current_settings.json not found, continuing without current settings.")
@@ -465,11 +465,11 @@ def analyze_track(file_path, output_dir, track_type):
     current = CURRENT_SETTINGS.get(track_name, {})
 
     # Handle the EQ adjustments based on what is given in the json
-    current_eq = current.get("eq", {"low": 0, "mid": 0, "high": 0})
+    current_eq = current.get("eq", {"low": {}, "mid": {}, "high": {}})
     eq_final = []
     for band in ["low", "mid", "high"]:
         suggested_db = deviation_to_db(deviation[band])
-        current_band_settings = current_eq.get(band, {})
+        current_band_settings = current_eq.get(band) or {}
         current_db = current_band_settings.get("gain", 0)
         delta_db = round(suggested_db - current_db, 1)
 
