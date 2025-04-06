@@ -59,8 +59,7 @@ def suggest_gain_adjustment(track_name, lufs_value, track_type):
     target_lufs = TARGET_LUFS_BY_TRACK.get(track_type, -18.0)
     current = CURRENT_SETTINGS.get(track_name, {})
     current_gain = current.get("gain", 0.0)
-    print(
-        f"[DEBUG] Track: {track_name}, Current Gain from JSON: {current_gain}")
+    print(f"[DEBUG] Track: {track_name}, Current Gain from JSON: {current}")
     delta = round(target_lufs - lufs_value, 1)
     suggestion = None
 
@@ -387,7 +386,7 @@ def analyze_track(file_path, output_dir, track_type):
     """Analyze a single audio file and output recommendations."""
 
     # get the track name, may be used to get other information later.
-    track_name = os.path.basename(file_path)
+    track_name = os.path.splitext(os.path.basename(file_path))[0].lower()
 
     # Load audio as mono
     audio = es.MonoLoader(filename=file_path)()
@@ -403,8 +402,7 @@ def analyze_track(file_path, output_dir, track_type):
     rms = es.RMS()(audio)
 
     gain_suggestions = suggest_gain_adjustment(
-        os.path.splitext(track_name)[0].lower(), integrated_lufs, track_type
-    )
+        track_name, integrated_lufs, track_type)
 
     # Only use a frame, not full audio, and ensure it's even-sized
     frame_size = 1024
