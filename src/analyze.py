@@ -122,8 +122,7 @@ def detect_problem_frequencies(audio, sample_rate=44100):
     suggestions = []
 
     # Problem zones and labels
-    zones = {"Muddiness": (150, 250), "Boxiness": (
-        300, 500), "Harshness": (2000, 4000)}
+    zones = {"Muddiness": (150, 250), "Boxiness": (300, 500), "Harshness": (2000, 4000)}
 
     for label, (start_hz, end_hz) in zones.items():
         start_bin, end_bin = freq_range_to_buns(start_hz, end_hz)
@@ -134,8 +133,7 @@ def detect_problem_frequencies(audio, sample_rate=44100):
             # the zone is 30% higher than average
             peak_bin = np.argmax(avg_spectrum[start_bin:end_bin]) + start_bin
             peak_freq = round(peak_bin * bin_hz)
-            suggestions.append(
-                f"Cut ~{peak_freq} Hz ({label.lower()} detected)")
+            suggestions.append(f"Cut ~{peak_freq} Hz ({label.lower()} detected)")
     return suggestions
 
 
@@ -173,12 +171,12 @@ def band_energy_ratio_avg(
 
     # Process frames
     for start in range(0, len(audio) - frame_size, hop_size):
-        frame = audio[start: start + frame_size]
+        frame = audio[start : start + frame_size]
 
         # Apply window and get the spectrum
         windowed_frame = window_algo(frame)
 
-        frame = audio[start: start + frame_size]
+        frame = audio[start : start + frame_size]
 
         # Ensure even length
         if len(frame) % 2 != 0:
@@ -237,11 +235,9 @@ def generate_recommendations(
 
     elif track_type == "vocal":
         if centroid < 1500:
-            eq_suggestions.append(
-                "Boost presence around 3kHz for vocal clarity.")
+            eq_suggestions.append("Boost presence around 3kHz for vocal clarity.")
         if ber_high > 0.5:
-            eq_suggestions.append(
-                "Use de-esser or cut 5-8kHz to tame sibilance.")
+            eq_suggestions.append("Use de-esser or cut 5-8kHz to tame sibilance.")
 
     elif track_type == "bass":
         if ber_low < 0.4:
@@ -259,21 +255,17 @@ def generate_recommendations(
 
     elif track_type == "hihat":
         if ber_low > 0.2:
-            eq_suggestions.append(
-                "Cut 200Hz - 400Hz to reduce bleed from other drums.")
+            eq_suggestions.append("Cut 200Hz - 400Hz to reduce bleed from other drums.")
         if ber_high < 0.5:
-            eq_suggestions.append(
-                "Boost 8kHz - 12kHz for shimmer and brightness.")
+            eq_suggestions.append("Boost 8kHz - 12kHz for shimmer and brightness.")
         if ber_high > 0.7:
             eq_suggestions.append("Consider taming harshness above 12kHz.")
 
     elif track_type == "tenor":
         if ber_low < 0.3:
-            eq_suggestions.append(
-                "Boost 150Hz - 250Hz for warmth and fullness.")
+            eq_suggestions.append("Boost 150Hz - 250Hz for warmth and fullness.")
         if ber_mid < 0.4:
-            eq_suggestions.append(
-                "Boost 2kHz - 5kHz for vocal presence and clarity.")
+            eq_suggestions.append("Boost 2kHz - 5kHz for vocal presence and clarity.")
         if ber_high > 0.5:
             eq_suggestions.append(
                 "Apply de-esser or reduce 5kHz - 8kHz to tame sibilance."
@@ -281,11 +273,9 @@ def generate_recommendations(
 
     elif track_type == "contra_alto":
         if ber_low < 0.4:
-            eq_suggestions.append(
-                "Boost 130Hz - 200Hz to add body and warmth.")
+            eq_suggestions.append("Boost 130Hz - 200Hz to add body and warmth.")
         if ber_mid < 0.4:
-            eq_suggestions.append(
-                "Boost 1kHz - 3kHz for clarity and presence.")
+            eq_suggestions.append("Boost 1kHz - 3kHz for clarity and presence.")
         if ber_high > 0.6:
             eq_suggestions.append("Reduce 5kHz - 7kHz to control harshness.")
 
@@ -293,8 +283,7 @@ def generate_recommendations(
         if ber_low < 0.3:
             eq_suggestions.append("Boost 150Hz - 250Hz for warmth and body.")
         if ber_mid < 0.4:
-            eq_suggestions.append(
-                "Boost 2kHz - 4kHz for articulation and clarity.")
+            eq_suggestions.append("Boost 2kHz - 4kHz for articulation and clarity.")
         if ber_high > 0.5:
             eq_suggestions.append(
                 "Reduce 5kHz - 8kHz or apply de-esser for sibilance control."
@@ -302,34 +291,28 @@ def generate_recommendations(
 
     elif track_type == "accordion":
         if ber_low < 0.4:
-            eq_suggestions.append(
-                "Boost 100Hz - 250Hz for warmth and bass body.")
+            eq_suggestions.append("Boost 100Hz - 250Hz for warmth and bass body.")
         if ber_mid > 0.5:
-            eq_suggestions.append(
-                "Cut 300Hz - 500Hz to reduce boxiness and muddiness.")
+            eq_suggestions.append("Cut 300Hz - 500Hz to reduce boxiness and muddiness.")
         if ber_mid < 0.3:
-            eq_suggestions.append(
-                "Boost 1kHz - 4kHz for clarity and presence.")
+            eq_suggestions.append("Boost 1kHz - 4kHz for clarity and presence.")
         if ber_high > 0.6:
             eq_suggestions.append(
                 "Reduce 5kHz - 8kHz to tame harshness or brittleness."
             )
         elif ber_high < 0.3:
-            eq_suggestions.append(
-                "Boost 5kHz - 8kHz to add air and brightness.")
+            eq_suggestions.append("Boost 5kHz - 8kHz to add air and brightness.")
     elif track_type == "piano":
         if ber_low < 0.3:
             eq_suggestions.append("Boost 50Hz - 100Hz for low-end fullness.")
         if ber_mid > 0.5:
-            eq_suggestions.append(
-                "Cut 200Hz - 400Hz to reduce muddiness or boxiness.")
+            eq_suggestions.append("Cut 200Hz - 400Hz to reduce muddiness or boxiness.")
         if ber_mid < 0.4:
             eq_suggestions.append("Boost 2kHz - 5kHz for attack and clarity.")
         if ber_high < 0.3:
             eq_suggestions.append("Boost 8kHz - 12kHz for air and brightness.")
         if ber_high > 0.6:
-            eq_suggestions.append(
-                "Cut above 10kHz to reduce harshness or brittleness.")
+            eq_suggestions.append("Cut above 10kHz to reduce harshness or brittleness.")
 
     # Compression logic (basic crest factor)
     crest_factor = np.max(np.abs(audio)) / rms
@@ -358,7 +341,7 @@ def detect_noise_floor(audio, threshold_silence_db=60, threshold_noise_db=-50):
     rms_list = []
 
     for i in range(0, len(audio) - frame_size, hop_size):
-        frame = audio[i: i + frame_size]
+        frame = audio[i : i + frame_size]
         rms = np.sqrt(np.mean(np.square(frame)))
         if rms > 0:
             rms_db = 20 * np.log10(rms)
@@ -376,8 +359,7 @@ def detect_noise_floor(audio, threshold_silence_db=60, threshold_noise_db=-50):
         suggestions.append("⚠️ Track may be mostly silent or disconnected")
 
     if min_rms > threshold_noise_db:
-        suggestions.append(
-            "⚠️ High noise floor detected - check mic, cable or gain")
+        suggestions.append("⚠️ High noise floor detected - check mic, cable or gain")
 
     return suggestions
 
@@ -402,7 +384,8 @@ def analyze_track(file_path, output_dir, track_type):
     rms = es.RMS()(audio)
 
     gain_suggestions = suggest_gain_adjustment(
-        track_name, integrated_lufs, track_type)
+        os.path.splitext(track_name)[0].lower(), integrated_lufs, track_type
+    )
 
     # Only use a frame, not full audio, and ensure it's even-sized
     frame_size = 1024
@@ -422,10 +405,8 @@ def analyze_track(file_path, output_dir, track_type):
 
     freq_resolution = 44100 / frame_size
     # Bin ranges
-    low_bin_low, low_bin_high = int(
-        20 / freq_resolution), int(250 / freq_resolution)
-    mid_bin_low, mid_bin_high = int(
-        250 / freq_resolution), int(4000 / freq_resolution)
+    low_bin_low, low_bin_high = int(20 / freq_resolution), int(250 / freq_resolution)
+    mid_bin_low, mid_bin_high = int(250 / freq_resolution), int(4000 / freq_resolution)
     high_bin_low, high_bin_high = (
         int(4000 / freq_resolution),
         int(20000 / freq_resolution),
@@ -435,7 +416,7 @@ def analyze_track(file_path, output_dir, track_type):
 
     window_algo = es.Windowing(type="hann")
     for start in range(0, len(audio) - frame_size, 512):
-        frame = audio[start: start + frame_size]
+        frame = audio[start : start + frame_size]
         if len(frame) < frame_size:
             continue
 
@@ -465,8 +446,7 @@ def analyze_track(file_path, output_dir, track_type):
         "high": ber_high_values,
     }
 
-    energy_plot_path = os.path.join(
-        output_dir, f"{track_name}_energy_trend.png")
+    energy_plot_path = os.path.join(output_dir, f"{track_name}_energy_trend.png")
     plot_band_energy_trends(ratios_by_band, energy_plot_path)
 
     # Plot waveform
