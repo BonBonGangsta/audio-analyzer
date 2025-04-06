@@ -401,6 +401,7 @@ def analyze_track(file_path, output_dir, track_type):
 
     problem_freqs = detect_problem_frequencies(audio)
 
+    freq_resolution = sample_rate / frame_size
     # Bin ranges
     low_bin_low, low_bin_high = int(20 / freq_resolution), int(250 / freq_resolution)
     mid_bin_low, mid_bin_high = int(250 / freq_resolution), int(4000 / freq_resolution)
