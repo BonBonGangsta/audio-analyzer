@@ -9,7 +9,6 @@ import json
 try:
     with open("/app/current_settings.json", "r") as f:
         CURRENT_SETTINGS = json.load(f)
-        print(f"CURRENT_SETTINGS: {CURRENT_SETTINGS}")
 except FileNotFoundError:
     CURRENT_SETTINGS = {}
     print("⚠️ current_settings.json not found, continuing without current settings.")
@@ -59,10 +58,7 @@ def mono_to_stereo(audio):
 def suggest_gain_adjustment(track_name, lufs_value, track_type):
     target_lufs = TARGET_LUFS_BY_TRACK.get(track_type, -18.0)
     current = CURRENT_SETTINGS.get(track_name, {})
-    print(f"Target LUFS: {target_lufs}")
-    print(f"Current_Settings for {track_name}: {current}")
     current_gain = current.get("gain", 0.0)
-    print(f"[DEBUG] Track: {track_name}, Current Gain from JSON: {current}")
     delta = round(target_lufs - lufs_value, 1)
     suggestion = None
 
@@ -372,7 +368,6 @@ def analyze_track(file_path, output_dir, track_type):
 
     # get the track name, may be used to get other information later.
     track_name = os.path.splitext(os.path.basename(file_path))[0].lower()
-    print(f"Track name inside analyze method: {track_name}")
     # Load audio as mono
     audio = es.MonoLoader(filename=file_path)()
     stereo_audio = mono_to_stereo(audio)
@@ -474,7 +469,8 @@ def analyze_track(file_path, output_dir, track_type):
     eq_final = []
     for band in ["low", "mid", "high"]:
         suggested_db = deviation_to_db(deviation[band])
-        current_db = current_eq.get(band, 0)
+        current_band_settings = current_eq.get(band, {})
+        current_db = current_band_settings.get("gain", 0)
         delta_db = round(suggested_db - current_db, 1)
 
         if abs(delta_db) >= 1:
