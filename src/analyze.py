@@ -7,8 +7,8 @@ import json
 
 
 try:
-  with open("/app/current_settings.json", "r") as f:
-    CURRENT_SETTINGS = json.load(f)
+    with open("/app/current_settings.json", "r") as f:
+        CURRENT_SETTINGS = json.load(f)
 except FileNotFoundError:
     CURRENT_SETTINGS = {}
     print("⚠️ current_settings.json not found, continuing without current settings.")
@@ -37,14 +37,14 @@ TRACK_TYPE_MAP = {
 TARGET_LUFS_BY_TRACK = {
     "kick": -14.0,
     "snare": -14.0,
-    "hihat": -16.0,
+    "hihat": -14.0,
     "overhead": -16.0,
-    "tom": -16.0,
+    "tom": -14.0,
     "bass": -16.0,
     "piano": -18.0,
     "accordion": -18.0,
-    "tenor": -18.0,
-    "alto": -18.0,
+    "tenor": -20.0,
+    "alto": -20.0,
     "contra_alto": -18.0,
     "director": -18.0,
     "pastor": -18.0,
