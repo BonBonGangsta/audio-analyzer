@@ -51,21 +51,21 @@ TARGET_LUFS_BY_TRACK = {
 }
 
 
-def trim_silence(audio, frame_size=1024, hop_size=512, threshold=0.01):
+def trim_silence(audio, frame_size=1024, hop_size=512, sensitivity=0.2):
     """
     Removes low-engery frames which could be silence or backgroun noise.
     """
-    window = es.Windowing(type="hann")
-    rms = es.RMS()
+    # calculate the global RMS of the entire track
+    global_rms = np.sqrt(np.mean(np.square(audio)))
+    threshold = global_rms * sensitivity
 
     kept_frames = []
 
     for start in range(0, len(audio) - frame_size, hop_size):
         frame = audio[start : start + frame_size]
-        windowed = window(frame)
-        energy = rms(windowed)
+        frame_rms = np.sqrt(np.mean(np.square(frame)))
 
-        if energy >= threshold:
+        if frame_rms >= threshold:
             kept_frames.append(frame)
 
     if not kept_frames:
